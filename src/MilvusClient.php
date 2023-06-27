@@ -115,9 +115,10 @@ class MilvusClient
      * @param $topk
      * @param $annsField
      * @param $metricType
+     * @param $dsl
      * @return void
      */
-    function searchVector($collection, $outputFields, $vectors, $topk = 100, $annsField = "embedding", $metricType="IP")
+    function searchVector($collection, $outputFields, $vectors, $topk = 100, $annsField = "embedding", $metricType="IP", $dsl = "")
     {
         $path = "{$this->version}/search";
         $body = [
@@ -132,6 +133,7 @@ class MilvusClient
                 ["key"  => "round_decimal", "value"=> "-1"],
             ],
             "vectors"=> $vectors,
+            "dsl" => $dsl,
         ];
 
         return $this->sendRequest("POST", $path, $body);
